@@ -40,3 +40,4 @@ time = np.arange(0,10**5,dt)
 
 plt.plot(time, dE/E0)
 plt.plot(time, omega)
+

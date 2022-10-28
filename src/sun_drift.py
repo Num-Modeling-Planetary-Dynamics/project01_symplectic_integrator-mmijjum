@@ -11,12 +11,18 @@ import numpy as np
 import danby
 import helio2bary
 
-rsunvec = [0,0,0]
+M2AU = 6.68*10**-12
+kg2Msun = 5.05*10**-31
+sec2yr = 3.17*10**-8
 
-GMsun = (6.6743 * 10**-11) * (10**30)
-GMneptune = (6.6743 * 10**-11) *1.024 * 10**26
-GMpluto = (6.6743 * 10**-11) * 1.3 * 10 **22
+G = ((6.6743 * 10**-11) * M2AU**3) / (kg2Msun * sec2yr**2)  #m3/kg s2
+
+GMsun = G #we're in units of Msun, so GMsun is just G.
+
+GMneptune = (G) * ((1.024 * 10**26) * kg2Msun)
+GMpluto = (G) * ((1.3 * 10 **22) * kg2Msun) 
 GMtotal = GMneptune + GMpluto
+
 
 
 dt = 1/30 * danby.period

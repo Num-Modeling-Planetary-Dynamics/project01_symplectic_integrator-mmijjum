@@ -49,10 +49,9 @@ a_p = 39.48
 P_p = 2 * np.pi * np.sqrt(a_p**3/mu_pluto) 
 dt_p = 1/30 * P_p
 
-time = np.arange
 
 #Danbys function will calculate E, which is needed to update rvec and vvec later.
-def kep(mu, dt, a, x, y, z, vx, vy, vz):
+def danbys(mu, a, x, y, z, vx, vy, vz):
     rvec0 = [x, y, z]
     vvec0 = [vx, vy, vz]
     
@@ -63,8 +62,9 @@ def kep(mu, dt, a, x, y, z, vx, vy, vz):
     hmag2 = np.dot(h,h)
     
     ecc = np.sqrt(1 - hmag2 / (mu*a))
-    n = np.sqrt(mu / a**3) 
+
    
+   # n = np.sqrt(mu / a**3) #mean motion, kepler's third law
 
   # Get the current value of the eccentric and mean anomalies.
   # Prevent floating point exception for 0 eccentricity orbits
@@ -103,97 +103,8 @@ def kep(mu, dt, a, x, y, z, vx, vy, vz):
             break
         E.append(Enew)
         Mlist.append(M)
-
-    f = a / rmag0 * (np.cos(E) - 1.0) + 1.0
-    g = dt + (np.sin(E) - E) / n
+    return E
     
-    # Advance position vector
-    rvec0 = np.asarray([[x],[y],[z]])
-    vvec0 = np.asarray([[vx], [vy], [vz]])
-    
-    rvec = f * rvec0 + g * vvec0
-    rmag = np.linalg.norm(rvec)
-    
-    fdot = -a**2 / (rmag * rmag0) * n * np.sin(E)
-    gdot = a / rmag * (np.cos(E) - 1.0) + 1.0
-    
-    vvec = fdot * rvec0 + gdot * vvec0
-    #period.append(P)
-
-
-    return rvec, vvec
-
-time  = np.arange(0,10,1) #small range for now, just for testing
-
-
-#this for loop will loop over different position/velocities (based on the updated position and velocities)
-#from danby's method above, and theoretically give a list of new position and velocity vectors.
-#doens't actually do this, coming across a divide by 0 error.
-
-# #NEPTUNE
-
-# rvectors_n = []
-# vvectors_n = []
-
-# for i in range(len(time)):
-# rvec = danby.danbys(mu_neptune, a_n, x_n, y_n, z_n, vx_n, vy_n,vz_n)[0]
-# #vvec = danby.danbys(mu_neptune, a_n, x_n, y_n, z_n, vx_n, vy_n,vz_n)[1]
-
-# # rvectors_n.append(rvec) #this  will store the values
-# # vvectors_n.append(vvec) #this will store the values
-
-# # xnew = (np.asarray(rvec)[0])
-# # ynew = (np.asarray(rvec)[1])
-# # znew = (np.asarray(rvec)[2])
-
-# # vxnew = (np.asarray(vvec)[0])
-# # vynew = (np.asarray(vvec)[1]) 
-# # vznew = (np.asarray(vvec)[2])
-
-# # # x_n = xnew[0]
-# # # y_n = ynew[0]
-# # # z_n = znew[0]
-
-# # # vx_n = vxnew[0]
-# # # vy_n = vynew[0]
-# # # vz_n = vznew[0]
-
-# # # #PLUTO
-
-# # # rvectors_p = []
-# # # vvectors_p = []
-# # # for i in range(len(time)):
-# # #     rvec = danbys(G*m_pluto, x_p, y_p, z_p, vx_p, vy_p,vz_p)[0]
-# # #     vvec = danbys(G*m_pluto, x_p, y_p, z_p, vx_p, vy_p,vz_p)[1]
-
-# # #     rvectors_p.append(rvec) #this  will store the values
-# # #     vvectors_p.append(vvec) #this will store the values
-
-
-# # #     xnew = (np.asarray(rvec)[0])
-# # #     ynew = (np.asarray(rvec)[1])
-# # #     znew = (np.asarray(rvec)[2])
-
-# # #     vxnew = (np.asarray(vvec)[0])
-# # #     vynew = (np.asarray(vvec)[1]) 
-# # #     vznew = (np.asarray(vvec)[2])
-
-# # #     x_p = xnew[0]
-# # #     y_p = ynew[0]
-# # #     z_p = znew[0]
-
-# # #     vx_p = vxnew[0]
-# # #     vy_p = vynew[0]
-# # #     vz_p = vznew[0]
-
-
-
-
-
-                                                                              
-                                                                             
-    
-      
 
 
 
