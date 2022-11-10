@@ -3,7 +3,6 @@
 
 Symplectic Integrator
 
-Does not run, but I attempted the following: 
-- Separate heliocentric drift, kick, and keplerian drift functions
-- a for loop that iterates over each of these, using the updates from the function before it to yield new rvectors and vvectors
-- final energy calculations using the updated r/vvectors
+Code now runs, but doesn't compute values correctly.
+
+Attempted a mix of coding styles, predominantly functional. I then tried to get all the elements to loop over (in calculations) under the if__name__ section, but wasn't totally successful.
